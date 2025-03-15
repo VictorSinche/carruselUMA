@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-carruseluma',
@@ -6,7 +6,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
   templateUrl: './carruseluma.component.html',
   styleUrl: './carruseluma.component.css'
 })
-export class CarruselumaComponent {
+export class CarruselumaComponent implements AfterViewInit {
   @ViewChild('carousel') carousel!: ElementRef;
   currentIndex = 0;
   intervalId: any;
@@ -18,23 +18,30 @@ export class CarruselumaComponent {
 
   startAutoSlide() {
     this.intervalId = setInterval(() => {
-      this.showSlide();
-    }, 15000); // Cambia cada 15 segundos
+      this.nextSlide();
+    }, 15000); // Cambia cada 2 segundos
+  }
+
+  nextSlide() {
+    const slides = this.carousel.nativeElement.children;
+    const totalSlides = slides.length;
+
+    if (totalSlides === 0) return; // Evitar errores si no hay slides
+
+    // Remover la clase active del slide actual
+    slides[this.currentIndex].classList.remove('active');
+
+    // Avanzar al siguiente slide
+    this.currentIndex = (this.currentIndex + 1) % totalSlides;
+
+    // Agregar la clase active al nuevo slide
+    slides[this.currentIndex].classList.add('active');
   }
 
   showSlide() {
     const slides = this.carousel.nativeElement.children;
-    const totalSlides = slides.length;
-
-    // Ocultar todas las imágenes
-    for (let i = 0; i < totalSlides; i++) {
-      slides[i].classList.add('active');
+    if (slides.length > 0) {
+      slides[0].classList.add('active'); // Mostrar la primera imagen inmediatamente
     }
-
-    // Mostrar la imagen actual
-    slides[this.currentIndex].classList.remove('active');
-
-    // Avanzar al siguiente índice
-    this.currentIndex = (this.currentIndex + 1) % totalSlides;
   }
 }
