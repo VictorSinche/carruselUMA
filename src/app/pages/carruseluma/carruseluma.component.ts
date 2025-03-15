@@ -19,7 +19,7 @@ export class CarruselumaComponent implements AfterViewInit {
   startAutoSlide() {
     this.intervalId = setInterval(() => {
       this.nextSlide();
-    }, 2000); // Avanzar cada 2 segundos
+    }, 15000); // Avanzar cada 2 segundos
   }
 
   nextSlide() {
