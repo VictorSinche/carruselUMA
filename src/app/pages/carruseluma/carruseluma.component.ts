@@ -19,7 +19,7 @@ export class CarruselumaComponent implements AfterViewInit {
   startAutoSlide() {
     this.intervalId = setInterval(() => {
       this.nextSlide();
-    }, 2000); // Cambia cada 15 segundos
+    }, 15000); // Cambia cada 15 segundos
   }
 
   nextSlide() {
