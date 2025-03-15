@@ -19,7 +19,7 @@ export class CarruselumaComponent implements AfterViewInit {
   startAutoSlide() {
     this.intervalId = setInterval(() => {
       this.nextSlide();
-    }, 15000); // Avanzar cada 2 segundos
+    }, 2000); // Cambia cada 15 segundos
   }
 
   nextSlide() {
@@ -28,41 +28,39 @@ export class CarruselumaComponent implements AfterViewInit {
 
     if (totalSlides === 0) return;
 
-    // Ocultar el slide actual
+    // Ocultar la imagen actual
     slides[this.currentIndex].classList.remove('active');
 
     // Avanzar al siguiente índice
     this.currentIndex++;
 
-    // Si llegó al final, saltar inmediatamente al primer slide sin animación
+    // Si llega al final, cambiar inmediatamente al primer slide sin tiempo muerto
     if (this.currentIndex >= totalSlides) {
       this.currentIndex = 0;
-      this.resetTransition();
+      this.forceInstantTransition();
     }
 
-    // Mostrar el nuevo slide
+    // Mostrar la nueva imagen
     slides[this.currentIndex].classList.add('active');
   }
 
   showSlide() {
     const slides = this.carousel.nativeElement.children;
     if (slides.length > 0) {
-      slides[0].classList.add('active');
+      slides[0].classList.add('active'); // Mostrar la primera imagen sin retrasos
     }
   }
 
-  resetTransition() {
-    // Quitar transición para evitar retraso cuando se regresa al primer slide
+  forceInstantTransition() {
     const slides = this.carousel.nativeElement.children;
-    for (let slide of slides) {
-      slide.style.transition = 'none';
-    }
 
-    // Restaurar la transición después de un breve tiempo para no afectar los otros cambios
+    // 🔹 Aplica la clase 'hidden' para evitar el retraso
+    slides[this.currentIndex].classList.add('hidden');
+
+    // 🔹 Después de 50ms, restaura la transición normal
     setTimeout(() => {
-      for (let slide of slides) {
-        slide.style.transition = 'opacity 1s ease-in-out';
-      }
-    }, 50);
-  }
+        slides[this.currentIndex].classList.remove('hidden');
+    }, 20);
+}
+
 }
