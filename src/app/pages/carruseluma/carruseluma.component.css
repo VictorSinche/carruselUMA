@@ -1,0 +1,55 @@
+/* Contenedor principal del carrusel */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Imagen de fondo desenfocada */
+.carousel-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/assets/images/uma/uma_img_campus_2.jpeg') no-repeat center center;
+    background-size: cover;
+    filter: blur(10px); /* Ajusta el nivel de desenfoque */
+    z-index: -1;
+}
+
+/* Contenedor del carrusel */
+#default-carousel {
+    position: relative;
+    z-index: 2; /* Asegura que el carrusel esté sobre el fondo */
+}
+
+/* Configuración de las diapositivas */
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -30px;
+}
+
+/* La diapositiva activa será visible */
+.slide.active {
+    opacity: 1;
+}
+
+/* Imágenes dentro del carrusel con sombras */
+.image {
+    max-width: 80%; /* Ajusta el tamaño máximo de la imagen */
+    max-height: 100%; /* Evita que se extienda demasiado */
+    object-fit: contain;
+    border-radius: 10px;
+    width: 73em;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5); /* Sombras elegantes */
+}
